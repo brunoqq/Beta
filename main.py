@@ -64,8 +64,7 @@ async def on_message(message):
     elif message.content.lower().startswith('/ban'):
         role = discord.utils.get(message.server.roles, name='💎 Staff')
         if not role in message.author.roles:
-            return await client.send_message(message.channel,
-                                             ":x: Você deverá possuir o cargo `💎 Staff` para executar este comando!")
+            return await client.send_message(message.channel, ":x: Você deverá possuir o cargo `💎 Staff` para executar este comando!")
         membro = message.mentions[0]
         embedmsg = discord.Embed(
             title="⚠ Punição!"
@@ -148,12 +147,14 @@ async def on_message(message):
                         "``/bc <mensagem>`` » Bot repete o que foi dito\n"
                         "``/aviso <mensagem>`` » Comando próprio para aviso\n"
                         "``/votar <mensagem>`` » Bot repete a mensagem e reage automaticamente com like/deslike\n"
-                        "``/sorteio`` » Inicia um sorteio de 1 a 500\n"
-                        "``/demotar <usuário>`` » Demote alguém (MOD, TRIAL E AJUDANTE)\n"
-                        "``/newtrial <usuário>`` » Seta a tag trial, staff e remove a membro\n\n"
+                        "``/sorteio`` » Inicia um sorteio de 1 a 500\n\n"
                         "**CARGOS:**\n\n"
-                        "``/groupadd <cargo> <usuário>``\n"
-                        "``/groupremove <cargo> <usuário>``\n"
+                        "``/groupadd <cargo> <usuário>`` » Adicione um cargo a alguém\n"
+                        "``/groupremove <cargo> <usuário>`` » Remova um cargo de alguém\n"
+                        "``/demotar <usuário>`` » Demote alguém (MOD, TRIAL E AJUDANTE)\n"
+                        "``/newmod <usuário>`` » Seta a tag mod, staff e remove a membro\n"
+                        "``/newtrial <usuário>`` » Seta a tag trial, staff e remove a membro\n"
+                        "``/newhelper <usuário>`` » Seta a tag ajudante, staff e remove a membro\n"
                         "\n"
                         "======================================================"
                         "\n\n"
@@ -516,6 +517,10 @@ async def on_message(message):
         if not message.author.server_permissions.administrator:
             return await client.send_message(message.channel, '❌ Você não possui acesso à este comando!')
         user = message.mentions[0]
+
+        cargo = discord.utils.get(message.author.server.roles, name='💎 Staff')
+        await client.remove_roles(user, cargo)
+
         cargo = discord.utils.get(message.author.server.roles, name='🍀Moderador')
         await client.remove_roles(user, cargo)
 
@@ -523,9 +528,6 @@ async def on_message(message):
         await client.remove_roles(user, cargo)
 
         cargo = discord.utils.get(message.author.server.roles, name='🔹Ajudante')
-        await client.remove_roles(user, cargo)
-
-        cargo = discord.utils.get(message.author.server.roles, name='💎 Staff')
         await client.remove_roles(user, cargo)
 
         cargo = discord.utils.get(message.author.server.roles, name='👤 Membro')
@@ -547,7 +549,39 @@ async def on_message(message):
         cargo = discord.utils.get(message.author.server.roles, name='👤 Membro')
         await client.remove_roles(user, cargo)
 
-        await client.send_message(discord.Object(id='414045925082923009'), '{} ingressa a equipe ocupando o cargo Trial-Mod!'.format(user.name))
+        await client.send_message(discord.Object(id='444996049522655264'), '**{}** Integra a equipe ocupando o cargo Trial-Mod!'.format(user.name))
+    ##NEW-MOD
+    elif message.content.lower().startswith('/newmod'):
+        if not message.author.server_permissions.administrator:
+            return await client.send_message(message.channel, '❌ Você não possui acesso à este comando!')
+        user = message.mentions[0]
+
+        cargo = discord.utils.get(message.author.server.roles, name='🍀Moderador')
+        await client.add_roles(user, cargo)
+
+        cargo = discord.utils.get(message.author.server.roles, name='💎 Staff')
+        await client.add_roles(user, cargo)
+
+        cargo = discord.utils.get(message.author.server.roles, name='👤 Membro')
+        await client.remove_roles(user, cargo)
+
+        await client.send_message(discord.Object(id='444996049522655264'), '**{}** Integra a equipe ocupando o cargo Moderador!'.format(user.name))
+    ##NEW-HELPER
+    elif message.content.lower().startswith('/newhelper'):
+        if not message.author.server_permissions.administrator:
+            return await client.send_message(message.channel, '❌ Você não possui acesso à este comando!')
+        user = message.mentions[0]
+
+        cargo = discord.utils.get(message.author.server.roles, name='🔹Ajudante')
+        await client.add_roles(user, cargo)
+
+        cargo = discord.utils.get(message.author.server.roles, name='💎 Staff')
+        await client.add_roles(user, cargo)
+
+        cargo = discord.utils.get(message.author.server.roles, name='👤 Membro')
+        await client.remove_roles(user, cargo)
+
+        await client.send_message(discord.Object(id='444996049522655264'), '**{}** Integra a equipe ocupando o cargo Ajudante!'.format(user.name))
     ##VERIFICADO
     elif message.content.lower().startswith('!ativartag verificado'):
         await client.delete_message(message)
