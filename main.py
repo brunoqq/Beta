@@ -554,6 +554,7 @@ async def on_message(message):
     elif message.content.lower().startswith('/newmod'):
         if not message.author.server_permissions.administrator:
             return await client.send_message(message.channel, '❌ Você não possui acesso à este comando!')
+        
         user = message.mentions[0]
 
         cargo = discord.utils.get(message.author.server.roles, name='🍀Moderador')
@@ -570,8 +571,8 @@ async def on_message(message):
     elif message.content.lower().startswith('/newhelper'):
         if not message.author.server_permissions.administrator:
             return await client.send_message(message.channel, '❌ Você não possui acesso à este comando!')
+        
         user = message.mentions[0]
-
         cargo = discord.utils.get(message.author.server.roles, name='🔹Ajudante')
         await client.add_roles(user, cargo)
 
