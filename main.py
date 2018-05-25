@@ -27,7 +27,7 @@ async def on_ready():
     print (client.user.id)
     print(f"Bot Version: {version}")
     print("=================================")
-    await client.change_presence(game=discord.Game(name="no betamc.com.br", type=1))
+    await client.change_presence(game=discord.Game(name="no betamc.com.br"))
 @client.event
 async def on_message(message):
 #MODERATION
