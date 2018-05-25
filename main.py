@@ -27,7 +27,7 @@ async def on_ready():
     print (client.user.id)
     print(f"Bot Version: {version}")
     print("=================================")
-    await client.change_presence(game=discord.Game(name="/AJUDA", url='https://twitch.tv/TheDiretor', type=1))
+    await client.change_presence(game=discord.Game(name="no betamc.com.br", type=1))
 @client.event
 async def on_message(message):
 #MODERATION
@@ -685,10 +685,6 @@ async def on_message(message):
         await client.send_message(message.channel, "Olá {}, te enviei umas informações no privado! 😘".format(
             message.author.mention))
         await client.send_message(message.author, embed=embed)
-    ##REAÇÃO
-    if message.channel.id == ("414034343149699072"):
-        await client.add_reaction(message, "✅")
-        await client.add_reaction(message, "🔝")
 @client.event
 async def on_member_join(member):
     grupo = discord.utils.find(lambda g: g.name == "👤 Membro", member.server.roles)
