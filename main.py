@@ -373,12 +373,9 @@ async def on_member_join(member):
 
     channel = client.get_channel('457190543093399562')
     serverchannel = member.server.default_channel
-    embedmsg = discord.Embed(
-          title="Olá {}!".format(member.name),
-          description="Bem vindo ao discord da rede de servidores H...!",
-          color=0x0d488a,
-      )
-    embedmsg.set_thumbnail(url=member.avatar_url)
+    msg = "Olá {0}, seja muito bem vindo ao ALTERAR DPS.\nEm nosso servidor de Discord você pode fazer novas amizades e se divertir muito.\n\nNossas Redes Sociais são:\n\nTwitter: https://www.twitter.com/DPS\nDiscord: https://discord.gg/f5jyQMtnIP: EM BREVE".format(member.mention, member.server.name)
+    await client.send_message(channel, msg)
+
 
     embed = discord.Embed(
         title="",
